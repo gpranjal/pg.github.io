@@ -1,0 +1,10 @@
+{
+  "name": "pg-github-io",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "bun build-tokens.mjs",
+    "serve": "python3 -m http.server 8000"
+  }
+}
