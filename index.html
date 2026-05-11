@@ -6,6 +6,20 @@
   <title>Pranjal Gupta</title>
   <meta name="description" content="Personal site of Pranjal Gupta. Tools, infrastructure, and a design system in progress.">
 
+  <script>
+    // Pre-paint theme apply. Runs before stylesheets so the resolved mode
+    // is set on <html> before first paint, preventing a flash of the wrong
+    // theme on a hard refresh.
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'dark' || stored === 'light') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,6 +49,24 @@
           <li><a href="#writing">Writing</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="mailto:gpranjal@gmail.com">Contact</a></li>
+          <li>
+            <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+              <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4"/>
+                <line x1="12" y1="3"   x2="12" y2="5"/>
+                <line x1="12" y1="19"  x2="12" y2="21"/>
+                <line x1="3"  y1="12"  x2="5"  y2="12"/>
+                <line x1="19" y1="12"  x2="21" y2="12"/>
+                <line x1="5.5" y1="5.5" x2="7" y2="7"/>
+                <line x1="17" y1="17"  x2="18.5" y2="18.5"/>
+                <line x1="5.5" y1="18.5" x2="7" y2="17"/>
+                <line x1="17" y1="7"   x2="18.5" y2="5.5"/>
+              </svg>
+              <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 14.5 A8 8 0 0 1 9.5 4 A8 8 0 1 0 20 14.5 Z"/>
+              </svg>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
@@ -180,6 +212,21 @@
       </ul>
     </div>
   </footer>
+
+  <script>
+    // Theme toggle handler. Reads the currently resolved theme (manual
+    // override on <html>, or the OS preference) and flips to the opposite,
+    // persisting the choice in localStorage.
+    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var current  = document.documentElement.getAttribute('data-theme');
+        var resolved = current || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        var next     = resolved === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    });
+  </script>
 
 </body>
 </html>
