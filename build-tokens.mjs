@@ -1,4 +1,12 @@
 #!/usr/bin/env bun
+// SUPERSEDED 2026-05-11. The design system pivoted from cream + terracotta to
+// Newsprint + Cobalt via a Claude design handoff. ../design/tokens.json was
+// not updated as part of that pivot, so running this script today would emit
+// stale cream + terracotta CSS that does not match the live system. The new
+// canonical CSS surface is ../design/colors_and_type.css; pg.github.io's
+// tokens.css is now hand-authored as a flat alias layer over that file.
+// See ../design/docs/claude-design-handoff-manifest-2026-05-11.md.
+//
 // Reads ../design/tokens.json (W3C DTCG) and emits tokens.css.
 // Idempotent: re-running produces byte-identical output. Mirrors the canonical
 // loader at ../design/build-tokens.mjs; differs only in source and output paths.
